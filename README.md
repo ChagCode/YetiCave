@@ -1,1 +1,1 @@
-# YetiCave progect
+# YetiCave project
