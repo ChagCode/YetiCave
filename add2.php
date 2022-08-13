@@ -54,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if (!empty($_FILES['img']['name'])) {
         $tmp_name = $_FILES['img']['tmp_name'];
-        $path = $_FILES[img]['name'];
+        $path = $_FILES['img']['name'];
 
         $finfo = finfo_open(FILEINFO_MIME_TYPE);
         $file_type = finfo_file($finfo, $tmp_name);
