@@ -1,5 +1,6 @@
 <?php
-$is_auth = rand(0, 1);
 
-$user_name = 'CHAG';
+$is_auth = '';
+
+$user_name = '';
 

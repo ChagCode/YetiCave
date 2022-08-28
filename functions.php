@@ -52,7 +52,7 @@ function get_arrow($result_query) {
     return $arrow;
 }
 
-// ПРАВИЛО ДЛЯ ДЛИНЫ ТЕКСТА=
+// ПРАВИЛО ДЛЯ ДЛИНЫ ТЕКСТА
 function validateLength($value, $min, $max) {
     if ($value) {
         $len = strlen($value);
@@ -60,7 +60,6 @@ function validateLength($value, $min, $max) {
             return "Значение должно быть от $min до $max символов";
         }
     }
-    return null;
 }
 // ПРАВИЛО ДЛЯ ПРИСУТСТВИЯ КАТЕГОРИИ
 function validateCategory($id, $allowed_list) {
@@ -71,6 +70,7 @@ function validateCategory($id, $allowed_list) {
 // ПРАВИЛО ДЛЯ НАЧАЛЬНОЙ ЦЕНЫ
 function validateNumb($numb) {
     if (!empty($numb)) {
+        $numb *= 1;
         if (is_int($numb) && $numb > 0) {
             return NULL;
         }
@@ -93,6 +93,14 @@ function validateDate ($date) {
         return "Содержимое поля «дата завершения» должно быть датой в формате «ГГГГ-ММ-ДД»";
     }
 };
+
+
+// ПРАВИЛО ДЛЯ EMAIL
+function validateEmail ($value) {
+    if (!filter_var($value, FILTER_VALIDATE_EMAIL)) {
+        return "Введите корректный EMAIL";
+    }
+}
 
 /**
  * Создает подготовленное выражение на основе готового SQL запроса и переданных данных

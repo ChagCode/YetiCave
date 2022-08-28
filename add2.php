@@ -8,6 +8,29 @@ require_once('helpers.php');
 $categories = getCategories($con);
 $categories_id = array_column($categories, 'id');
 
+$header = include_template('categories.php', [
+    'categories' => $categories,
+]);
+
+if (!$is_auth) {
+    $page_content = include_template('403.php', [
+        'header' => $header,
+    ]);
+    $layout_content = include_template('layout.php', [
+        'content' => $page_content,
+        'categories' => $categories,
+        'is_auth' => $is_auth,
+        'user_name' => $user_name,
+        'title' => 'Доступ запрещен',
+]);
+    print($layout_content);
+    exit();
+}
+
+$page_content = include_template(add2.php, [
+    'categories' => $categories,
+    'header' => $header,
+]);
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // СПИСОК ОБЯЗАТЕЛЬНЫХ ПОЛЕЙ
@@ -81,10 +104,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             'categories' => $categories,
         ]);
     } else {
-        $sql = "INSERT INTO lots (title, category_id, lot_description, start_price, step, date_finish, img, user_id) VALUES (?, ?, ?, ?, ?, ?, ?, 1)";
+        $sql = createLot($_SESSION['id']);
         $stmt = db_get_prepare_stmt_version($con, $sql, $lot);
         $res = mysqli_stmt_execute($stmt);
-
 
         if ($res) {
             $lot_id = mysqli_insert_id($con);
@@ -94,17 +116,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 }
 
-
-$page_content = include_template('add2.php', [
-    'categories' => $categories,
-]);
-
 $layout_content = include_template('layout.php', [
-   'content' => $page_content,
-   'categories' => $categories,
-   'is_auth' => $is_auth,
-   'user_name' => $user_name,
-   'title' => 'Добавление лота',
+    'content' => $page_content,
+    'categories' => $categories,
+    'is_auth' => $is_auth,
+    'user_name' => $user_name,
+    'title' => 'Добавление лота',
 ]);
 
 print($layout_content);
