@@ -1,3 +1,5 @@
+<main>
+    <?= $header; ?>
     <section>
       <h2><?= $lot['title']; ?></h2>
       <div class="lot-item__content">
@@ -92,7 +94,6 @@
             </table>
           </div>
         </div>
-
-
       </div>
     </section>
+</main>

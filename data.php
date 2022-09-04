@@ -1,7 +1,5 @@
 <?php
 session_start();
-$is_auth = !empty($_SESSION['name']);
-if ($is_auth) {
-    $user_name = $_SESSION['name'];
-}
+$is_auth = isset($_SESSION['userName']);
+$user_name = $is_auth ? $_SESSION['userName'] : "";
 

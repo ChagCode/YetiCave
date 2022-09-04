@@ -27,7 +27,7 @@ if (!$is_auth) {
     exit();
 }
 
-$page_content = include_template(add2.php, [
+$page_content = include_template('add2.php', [
     'categories' => $categories,
     'header' => $header,
 ]);
@@ -72,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     }
     //УБИРАЕМ ИЗ МАССИВА ЗНАЧЕНИЯ type NULL
-    //ОСТАНУТЬСЯ СООБЩЕНИЯ ТОЛЬКО О НЕВАЛИДНЫХ ПОЛЯХ
+    //ОСТАНУТЬСЯ СООБЩЕНИЯ ТОЛЬКО О ПОЛЯХ С ОШИБКАМИ
     $errors = array_filter($errors);
 
     if (!empty($_FILES['img']['name'])) {

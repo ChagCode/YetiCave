@@ -7,8 +7,11 @@ require_once('helpers.php');
 
 $categories = getCategories($con);
 
+$header = include_template('header.php', ['categories' => $categories]);
+
 $page_content = include_template('sign-up.php', [
     'categories' => $categories,
+    'header' => $header,
 ]);
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -49,6 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             'user' => $user,
             'errors' => $errors,
             'categories' => $categories,
+            'header' => $header,
         ]);
     } else {
         $sql_users = getEmailUsers($con);
@@ -61,6 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 'user' => $user,
                 'errors' => $errors,
                 'categories' => $categories,
+                'header' => $header,
             ]);
         } else {
             $sql = addUser();

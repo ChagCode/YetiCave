@@ -1,3 +1,5 @@
+      <main>
+      <?= $header; ?>
       <?php $classname = isset($errors) ? "form--invalid" : ""; ?>
       <form class="form form--add-lot container form--invalid" action="add2.php" method="POST"
           enctype="multipart/form-data">
@@ -78,3 +80,4 @@
           <?php endif; ?>
           <button type="submit" class="button">Добавить лот</button>
       </form>
+      </main>

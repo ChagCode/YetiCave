@@ -1,13 +1,5 @@
 <main>
-    <nav class="nav">
-        <ul class="nav__list container">
-        <?php foreach ($categories as $category): ?>
-            <li class="nav__item">
-                <a href="pages/all-lots.html"><?= $category['category']; ?></a>
-            </li>
-            <?php endforeach; ?>
-        </ul>
-    </nav>
+    <?= $header; ?>
 
     <?php $classname = isset($errors) ? "form--invalid" : ""; ?>
     <form class="form container <?= $classname; ?>" action="sign-up.php" method="POST" autocomplete="off">

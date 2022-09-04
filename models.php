@@ -1,4 +1,16 @@
 <?php
+// ЗАПРОС НА ПОЛУЧЕНИЕ ЛОТОВ
+function getQueryLots ($con) {
+        $sql = "SELECT lots.id, lots.img, categories.category, lots.title, lots.start_price, lots.date_finish FROM lots JOIN categories ON lots.category_id = categories.id ORDER BY date_creation DESC";
+        $results = mysqli_query($con, $sql);
+        if ($results) {
+            $products = get_arrow($results);
+            return $products;
+        } else {
+            print("Оштбка MySQL: " . mysqli_error($con));
+    }
+}
+
 // ВОЗВРАЩАЕТ МАССИВ КАТЕГОРИЙ ИЗ БД
 function getCategories($con) {
     if ($con) {
@@ -17,7 +29,7 @@ function getLot($con, $id) {
     if ($id) {
         $sql_lot = "SELECT lots.id, lots.date_creation, lots.img, lots.title, lots.lot_description,
         lots.start_price, lots.date_finish, lots.step, user_id, categories.category FROM lots
-        JOIN categories ON lots.category_id=categories.id WHERE lots.id = $id;";
+        JOIN categories ON lots.category_id=categories.id WHERE lots.id = '$id'";
     } else {
         print("Оштбка MySQL: " . mysqli_error($con));
     }

@@ -8,9 +8,9 @@ require_once('helpers.php');
 
 $categories = getCategories($con);
 
-$page_content = include_template('login.php', [
-    'categories' => $categories,
-]);
+$header = include_template('header.php', compact('categories'));
+
+$page_content = include_template('login.php', compact('categories', 'header'));
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $require_fields = ['email', 'user_password'];
@@ -26,7 +26,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             'email' => FILTER_DEFAULT,
             'user_password' => FILTER_DEFAULT,
         ]);
-
     foreach ($user as $key => $value) {
         if (isset($rules[$key])) {
             $rule = $rules[$key];
@@ -40,33 +39,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $errors = array_filter($errors);
 
     if (count($errors)) {
-        $page_content = include_template('login.php', [
-            'user' => $user,
-            'errors' => $errors,
-            'categories' => $categories,
-        ]);
+        $page_content = include_template('login.php', compact('user', 'errors', 'categories', 'header'));
     } else {
         $sql_users = getLogin($con, $user['email']);
         if ($sql_users) {
             if (password_verify($user['user_password'], $sql_users['user_password'])) {
-                $ss = session_start();
-                $_SESSION['name'] = $sql_users['user_name'];
-                $_SESSION['id'] = $sql_users['id'];
-                header("Location: /index.php");
+                session_start();
+                $_SESSION['userName'] = $sql_users['user_name'];
+                $_SESSION['userId'] = $sql_users['id'];
+
+                header('location: index.php');
+                //echo "<script type='text/javascript'>  window.location='index.php'; </script>";
             } else {
                 return $errors['user_password'] = "Вы ввели неверный пароль";
             }
         } else {
             return $errors['email'] = "Пользователь с таким E-mail не зарегистрирован";
         }
-    }
-
-    if (count($errors)) {
-        $page_content = include_template('login.php', [
-            'user' => $user,
-            'errors' => $errors,
-            'categories' => $categories,
-        ]);
+        if (count($errors)) {
+            $page_content = include_template('login.php', compact('user', 'errors', 'categories', 'header'));
+        }
     }
 }
 

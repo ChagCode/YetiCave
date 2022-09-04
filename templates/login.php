@@ -1,3 +1,5 @@
+<main>
+<?= $header; ?>
     <?php $classname = isset($errors) ? "form--invalid" : ""; ?>
     <form class="form container <?= $classname; ?>" action="login.php" method="POST">
       <h2>Вход</h2>
@@ -15,4 +17,4 @@
       </div>
       <button type="submit" class="button">Войти</button>
     </form>
-
+</main>

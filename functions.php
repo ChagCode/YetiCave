@@ -41,7 +41,7 @@ function get_time_final($dt)
  * @param object $result_query mysqli Результат запроса к базе данных
  * @return array
  */
-function get_arrow($result_query) {
+function get_arrow ($result_query) {
     $row = mysqli_num_rows($result_query);
     if ($row === 1) {
         $arrow = mysqli_fetch_assoc($result_query);
